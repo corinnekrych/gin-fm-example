@@ -1,0 +1,27 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: test secreet
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+jobs:
+  build:
+    
+    steps:
+      - name: Say hello
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "hello world"
+          echo "${{secrets.test_multiline_prop}}"
+          s="${{secrets.test_multiline_prop}}"
+
+          echo "${s:0:2}"   # first 5 chars
+          echo "${s:2}"     # remaining chars (from index 5 to end)
+
+      - name: step2
+        uses: https://github.com/cb-nsrinivasa/rand-act
+        with:
+          string-val: ${{secrets.test_multiline_prop}}
