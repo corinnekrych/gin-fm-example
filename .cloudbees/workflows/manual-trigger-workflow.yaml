@@ -3,16 +3,6 @@ kind: workflow
 name: Manual Trigger Workflow
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        type: string
-        description: 'Environment to deploy to'
-        required: true
-        default: 'staging'
-      version:
-        type: string
-        description: 'Version to deploy'
-        required: false
 jobs:
   manual-job:
     steps:
@@ -24,6 +14,4 @@ jobs:
         shell: sh
         run: |
           echo "Manually triggered workflow"
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Version: ${{ inputs.version }}"
           echo "Triggered by: ${{ cloudbees.actor }}"
