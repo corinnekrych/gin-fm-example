@@ -1,29 +1,21 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
-name: Manual Trigger Workflow
+name: Push Trigger Workflow
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        type: string
-        description: 'Environment to deploy to'
-        required: true
-        default: 'staging'
-      version:
-        type: string
-        description: 'Version to deploy'
-        required: false
+  push:
+    branches:
+      - main
 jobs:
-  manual-job:
+  build-on-push:
     steps:
       - name: Checkout code
         uses: cloudbees-io/checkout@v1
       
-      - name: Run manual task
+      - name: Build on push
         uses: docker://alpine:latest
         shell: sh
         run: |
-          echo "Manually triggered workflow"
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Version: ${{ inputs.version }}"
-          echo "Triggered by: ${{ cloudbees.actor }}"
+          echo "Building from push event"
+          echo "Branch: ${{ cloudbees.scm.branch }}"
+          echo "Commit: ${{ cloudbees.scm.sha }}"
+          echo "Commit message: ${{ cloudbees.scm.commit.message }}"
