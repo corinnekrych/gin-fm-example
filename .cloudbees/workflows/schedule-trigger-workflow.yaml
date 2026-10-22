@@ -1,0 +1,25 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: Schedule Trigger Workflow
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Runs daily at 2 AM UTC
+jobs:
+  scheduled-job:
+    steps:
+      - name: Checkout code
+        uses: cloudbees-io/checkout@v1
+      
+      - name: Run scheduled task
+        uses: docker://alpine:latest
+        shell: sh
+        run: |
+          echo "Running scheduled workflow"
+          echo "Current time: $(date)"
+          echo "This runs daily at 2 AM UTC"
+          
+      - name: Cleanup or maintenance
+        uses: docker://alpine:latest
+        shell: sh
+        run: |
+          echo "Performing maintenance tasks"
