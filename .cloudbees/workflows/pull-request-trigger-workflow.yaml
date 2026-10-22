@@ -1,0 +1,26 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: Pull Request Trigger Workflow
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - main
+jobs:
+  pr-validation:
+    steps:
+      - name: Checkout code
+        uses: cloudbees-io/checkout@v1
+      
+      - name: Validate PR
+        uses: docker://alpine:latest
+        shell: sh
+        run: |
+          echo "Validating pull request"
+          echo "PR Number: ${{ cloudbees.scm.pull_request.number }}"
+          echo "PR Title: ${{ cloudbees.scm.pull_request.title }}"
+          echo "Source Branch: ${{ cloudbees.scm.pull_request.head_ref }}"
+          echo "Target Branch: ${{ cloudbees.scm.pull_request.base_ref }}"
