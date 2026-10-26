@@ -18,6 +18,3 @@ jobs:
         shell: sh
         run: |
           echo "Building from push event"
-          # echo "Branch: ${{ cloudbees.scm.branch }}"
-          # echo "Commit: ${{ cloudbees.scm.sha }}"
-          # echo "Commit message: ${{ cloudbees.scm.commit.message }}"
