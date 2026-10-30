@@ -19,32 +19,44 @@ jobs:
         uses: cloudbees-io/checkout@v1
       
       - name: Setup environment
+        uses: docker://alpine:3.18
+        shell: sh
         run: |
           echo "Setting up build environment"
       
       - name: Build application
+        uses: docker://alpine:3.18
+        shell: sh
         run: |
           echo "Building application..."
           echo "Build completed successfully"
       
       - name: Run unit tests
         if: ${{ github.event_name == 'push' }}
+        uses: docker://alpine:3.18
+        shell: sh
         run: |
           echo "Running unit tests..."
           echo "All tests passed"
       
       - name: Security scan (SKIPPED)
         if: false
+        uses: docker://alpine:3.18
+        shell: sh
         run: |
           echo "This step will always be skipped"
           echo "Running security scan..."
       
       - name: Deploy to staging
+        uses: docker://alpine:3.18
+        shell: sh
         run: |
           echo "Deploying to staging environment..."
           echo "Deployment successful"
       
       - name: Final notification
+        uses: docker://alpine:3.18
+        shell: sh
         run: |
           echo "Workflow completed"
           echo "All steps executed successfully"
