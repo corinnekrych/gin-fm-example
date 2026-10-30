@@ -10,35 +10,27 @@ on:
 jobs:
   build-and-test:
     steps:
-      - name: Checkout code
-        uses: cloudbees-io/checkout@v1
-      - name: Setup environment
+      - name: Multi-step action with skip
         uses: docker://alpine:3.18
         shell: sh
         run: |
+          echo "Step 1: Checkout code"
+          echo "Checking out repository..."
+          
+          echo "Step 2: Setup environment"
           echo "Setting up build environment"
-      - name: Build application
-        uses: docker://alpine:3.18
-        shell: sh
-        run: |
+          
+          echo "Step 3: Build application"
           echo "Building application..."
           echo "Build completed successfully"
-      - name: Security scan (SKIPPED)
-        if: false
-        uses: docker://alpine:3.18
-        shell: sh
-        run: |
-          echo "This step will always be skipped"
-          echo "Running security scan..."
-      - name: Deploy to staging
-        uses: docker://alpine:3.18
-        shell: sh
-        run: |
+          
+          echo "Step 4: Security scan (SKIPPED)"
+          # This step is skipped - no security scan performed
+          
+          echo "Step 5: Deploy to staging"
           echo "Deploying to staging environment..."
           echo "Deployment successful"
-      - name: Final notification
-        uses: docker://alpine:3.18
-        shell: sh
-        run: |
+          
+          echo "Step 6: Final notification"
           echo "Workflow completed"
           echo "All steps executed successfully"
