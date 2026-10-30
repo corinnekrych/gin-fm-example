@@ -31,14 +31,6 @@ jobs:
           echo "Building application..."
           echo "Build completed successfully"
       
-      - name: Run unit tests
-        if: ${{ github.event_name == 'push' }}
-        uses: docker://alpine:3.18
-        shell: sh
-        run: |
-          echo "Running unit tests..."
-          echo "All tests passed"
-      
       - name: Security scan (SKIPPED)
         if: false
         uses: docker://alpine:3.18
