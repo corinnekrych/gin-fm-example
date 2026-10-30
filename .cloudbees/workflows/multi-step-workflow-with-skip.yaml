@@ -1,0 +1,50 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+
+name: Multi-Step Workflow with Skip
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: cloudbees-io/checkout@v1
+      
+      - name: Setup environment
+        run: |
+          echo "Setting up build environment"
+      
+      - name: Build application
+        run: |
+          echo "Building application..."
+          echo "Build completed successfully"
+      
+      - name: Run unit tests
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "Running unit tests..."
+          echo "All tests passed"
+      
+      - name: Security scan (SKIPPED)
+        if: false
+        run: |
+          echo "This step will always be skipped"
+          echo "Running security scan..."
+      
+      - name: Deploy to staging
+        run: |
+          echo "Deploying to staging environment..."
+          echo "Deployment successful"
+      
+      - name: Final notification
+        run: |
+          echo "Workflow completed"
+          echo "All steps executed successfully"
